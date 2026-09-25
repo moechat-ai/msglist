@@ -1,8 +1,21 @@
 /**
  * 布局与外观。颜色一律取 tokens.css 的变量，本文件不出现颜色字面量。
  *
- * 高度用 100% 而不是 100vh：Android WebView 里 100vh 在子应用容器中会算错
- * （见《宿主设计实现方案》§9.1），html/body/#root 逐级 100% 不踩这个坑。
+ * ## 高度为什么用 position: fixed 而不是百分比链
+ *
+ * Android WebView 实测（WebView 124 / dpr 2.625 / 容器 1080×1812px）：
+ *
+ *     innerHeight                = 691     ← 视口是对的
+ *     documentElement.clientHeight = 691   ← 按规范这里恒等于视口，所以看不出问题
+ *     documentElement.getBoundingClientRect().height = 0   ← 但 html 自己的盒子是 0
+ *     body.clientHeight          = 0
+ *
+ * html 的盒子高度是 0，于是 `body { height:100% }` = 0、`#root` = 0、`.app` = 0，
+ * 整条百分比链塌掉。症状很隐蔽：标题（被 flex 布局溢出撑出）看得见，
+ * 滚动容器高度 0 被 overflow 剪掉，列表整片空白。
+ *
+ * `position: fixed` 的包含块是**视口**而不是父元素，绕开 html 的盒子高度，
+ * 四端行为一致，且不依赖 dvh（老 WebView 不支持 dvh 时会退化成 height:auto）。
  */
 
 *,
@@ -37,9 +50,12 @@ button {
 /* ── 骨架 ───────────────────────────────────────────────── */
 
 .app {
+  position: fixed;
+  inset: 0;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  /* 滚动全部交给内部 .scroller，页面本身不滚 */
+  overflow: hidden;
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
     env(safe-area-inset-left);
 }
