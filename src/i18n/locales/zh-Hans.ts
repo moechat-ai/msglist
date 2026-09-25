@@ -15,6 +15,8 @@ export const zhHans = {
   'list.members': '{n} 人',
   /** 群聊没有群名时，成员名的拼接符 */
   'list.nameSeparator': '、',
+  /** 会话列表里自己发的那条预览的前缀。含冒号——中文用全角，英文用半角加空格 */
+  'list.ownPrefix': '我：',
 
   'chat.back': '返回',
   'chat.placeholder': '输入消息…',
@@ -22,5 +24,4 @@ export const zhHans = {
   'chat.image': '[图片]',
   'chat.day.today': '今天',
   'chat.day.yesterday': '昨天',
-  'chat.you': '我',
 }

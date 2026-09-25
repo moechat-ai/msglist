@@ -12,6 +12,7 @@ export const en: typeof zhHans = {
   'list.empty': 'No conversations yet',
   'list.members': '{n} members',
   'list.nameSeparator': ', ',
+  'list.ownPrefix': 'You: ',
 
   'chat.back': 'Back',
   'chat.placeholder': 'Type a message…',
@@ -19,5 +20,4 @@ export const en: typeof zhHans = {
   'chat.image': '[Image]',
   'chat.day.today': 'Today',
   'chat.day.yesterday': 'Yesterday',
-  'chat.you': 'You',
 }

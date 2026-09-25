@@ -81,7 +81,7 @@ function Row({ conversation, now, onOpen }: RowProps) {
         <div className="row__preview">
           {last === undefined ? null : last.senderId === SELF_ID ? (
             <>
-              <em>{t('chat.you')}: </em>
+              <em>{t('list.ownPrefix')}</em>
               {previewText(last)}
             </>
           ) : (
