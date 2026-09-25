@@ -1,0 +1,30 @@
+/**
+ * 设计 token —— 与宿主 `Theme.kt` / `Theme.swift` 同源同值。
+ * 改这里之前先改宿主，否则四端会出现色差。
+ * 这里是**唯一**允许出现颜色字面量的文件。
+ */
+:root {
+  --mc-background: #0a0b0d;
+
+  --mc-surface: rgb(255 255 255 / 5.5%);
+  --mc-surface-stroke: rgb(255 255 255 / 10%);
+  --mc-raised: rgb(255 255 255 / 7%);
+
+  --mc-text: rgb(255 255 255 / 92%);
+  --mc-text-secondary: rgb(255 255 255 / 66%);
+  --mc-text-tertiary: rgb(255 255 255 / 42%);
+  --mc-text-faint: rgb(255 255 255 / 28%);
+
+  /* 第三象限「社会关系」的主题色，消息应用属于该象限 */
+  --mc-accent: #d65ba6;
+  --mc-accent-soft: rgb(214 91 166 / 45%);
+  /* 铺在 accent 上的前景色 */
+  --mc-on-accent: #ffffff;
+
+  --mc-radius-container: 26px;
+  --mc-radius-cell: 18px;
+  --mc-padding: 14px;
+
+  --mc-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC',
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}

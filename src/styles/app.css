@@ -1,0 +1,333 @@
+/**
+ * 布局与外观。颜色一律取 tokens.css 的变量，本文件不出现颜色字面量。
+ *
+ * 高度用 100% 而不是 100vh：Android WebView 里 100vh 在子应用容器中会算错
+ * （见《宿主设计实现方案》§9.1），html/body/#root 逐级 100% 不踩这个坑。
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--mc-background);
+  color: var(--mc-text);
+  font-family: var(--mc-font);
+  font-size: 15px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* ── 骨架 ───────────────────────────────────────────────── */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+}
+
+.hdr {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+  min-height: 46px;
+  padding: 10px var(--mc-padding) 6px;
+}
+
+.hdr__title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hdr__sub {
+  flex: none;
+  font-size: 12px;
+  color: var(--mc-text-tertiary);
+}
+
+.scroller {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroller::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroller::-webkit-scrollbar-thumb {
+  background: var(--mc-surface-stroke);
+  border-radius: 4px;
+}
+
+.iconbtn {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--mc-text-secondary);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.iconbtn:hover {
+  background: var(--mc-raised);
+  color: var(--mc-text);
+}
+
+.empty {
+  padding: 56px 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--mc-text-faint);
+}
+
+.avatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--mc-on-accent);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  user-select: none;
+}
+
+/* ── 会话列表 ───────────────────────────────────────────── */
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px var(--mc-padding);
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.row:hover {
+  background: var(--mc-raised);
+}
+
+.row__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.row__title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row__count {
+  flex: none;
+  padding: 0 4px;
+  border: 1px solid var(--mc-surface-stroke);
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--mc-text-tertiary);
+}
+
+.row__preview {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--mc-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row__preview em {
+  font-style: normal;
+  color: var(--mc-text-faint);
+}
+
+.row__side {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.row__time {
+  font-size: 11.5px;
+  color: var(--mc-text-tertiary);
+  white-space: nowrap;
+}
+
+.row__unread {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: var(--mc-accent);
+  color: var(--mc-on-accent);
+  font-size: 11px;
+  font-weight: 600;
+  display: grid;
+  place-items: center;
+}
+
+/* ── 聊天流 ─────────────────────────────────────────────── */
+
+.stream {
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--mc-padding) 10px;
+}
+
+.daysep {
+  align-self: center;
+  margin: 14px 0 10px;
+  font-size: 11.5px;
+  color: var(--mc-text-faint);
+}
+
+.msg {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  margin-top: 3px;
+}
+
+.msg--own {
+  flex-direction: row-reverse;
+}
+
+.msg__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  max-width: 76%;
+}
+
+.msg--own .msg__body {
+  align-items: flex-end;
+}
+
+.msg__sender {
+  margin: 0 0 3px 2px;
+  font-size: 11.5px;
+  color: var(--mc-text-tertiary);
+}
+
+.bubble {
+  padding: 8px 12px;
+  border-radius: 16px;
+  background: var(--mc-surface);
+  border: 1px solid var(--mc-surface-stroke);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.msg--own .bubble {
+  background: var(--mc-accent);
+  border-color: transparent;
+  color: var(--mc-on-accent);
+}
+
+.imageph {
+  width: 168px;
+  height: 126px;
+  border-radius: 14px;
+  border: 1px solid var(--mc-surface-stroke);
+  background: linear-gradient(135deg, var(--mc-raised), var(--mc-surface));
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  color: var(--mc-text-tertiary);
+}
+
+/* ── 输入区 ─────────────────────────────────────────────── */
+
+.composer {
+  flex: none;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 8px var(--mc-padding);
+  border-top: 1px solid var(--mc-surface-stroke);
+}
+
+.composer__input {
+  flex: 1;
+  min-width: 0;
+  max-height: 120px;
+  padding: 9px 12px;
+  border: 1px solid var(--mc-surface-stroke);
+  border-radius: 18px;
+  background: var(--mc-surface);
+  color: var(--mc-text);
+  font: inherit;
+  resize: none;
+}
+
+.composer__input::placeholder {
+  color: var(--mc-text-faint);
+}
+
+.composer__input:focus {
+  outline: none;
+  border-color: var(--mc-accent-soft);
+}
+
+.composer__send {
+  flex: none;
+  padding: 9px 14px;
+  border: 0;
+  border-radius: 18px;
+  background: var(--mc-accent);
+  color: var(--mc-on-accent);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.composer__send:disabled {
+  background: var(--mc-raised);
+  color: var(--mc-text-faint);
+  cursor: default;
+}
