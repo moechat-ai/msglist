@@ -6,7 +6,7 @@
 moechat 的**消息**子应用：会话列表 + 单聊/群聊界面渲染。
 挂在第三象限「社会关系」下，是该象限的默认应用。
 
-Web 应用，被四端原生宿主（macOS / iOS / Android / Web）的 WebView 加载。
+Web 应用，被五个原生宿主（macOS / Windows / Linux / iOS / Android）的 WebView 加载。
 
 ## 开发
 
