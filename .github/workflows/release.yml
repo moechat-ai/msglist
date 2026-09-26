@@ -1,0 +1,41 @@
+name: Release
+
+# 推 v* tag 即发布。子应用没有平台绑定，任何宿主都能直接吃这个 dist。
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+
+      - name: 打包
+        run: |
+          cd dist
+          zip -qr "$GITHUB_WORKSPACE/msglist-${GITHUB_REF_NAME}.zip" .
+          cd "$GITHUB_WORKSPACE"
+          sha256sum msglist-*.zip > SHA256SUMS
+
+      - name: 发布
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            msglist-*.zip SHA256SUMS \
+            --title "$GITHUB_REF_NAME" \
+            --generate-notes

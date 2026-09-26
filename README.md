@@ -1,5 +1,8 @@
 # msglist
 
+[![CI](https://github.com/moechat-ai/msglist/actions/workflows/ci.yml/badge.svg)](https://github.com/moechat-ai/msglist/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/moechat-ai/msglist?color=blue)](https://github.com/moechat-ai/msglist/releases)
+
 moechat 的**消息**子应用：会话列表 + 单聊/群聊界面渲染。
 挂在第三象限「社会关系」下，是该象限的默认应用。
 
